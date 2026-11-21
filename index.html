@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffc2d4">
+<title>i made u something 💗</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💗</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: #f3a6c6 rgba(255,255,255,.35); }
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: rgba(255,255,255,.35); }
+  ::-webkit-scrollbar-thumb { background: #f3a6c6; border-radius: 8px; }
+  ::-webkit-scrollbar-thumb:hover { background: #d63384; }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    font-family: 'Quicksand', sans-serif;
+    color: #5a1030;
+    background: linear-gradient(135deg, #ffd3e0, #ffc2d4 35%, #e7b7f0 70%, #c9b6f5);
+    overflow-x: hidden;
+  }
+  .script { font-family: 'Pacifico', cursive; color: #d63384; font-weight: 400; }
+  .hidden { display: none !important; }
+
+  /* ---------- background hearts ---------- */
+  #hearts-bg { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+  .bg-heart { position: absolute; bottom: -12vh; animation: floatUp linear infinite; will-change: transform; }
+  @keyframes floatUp {
+    0%   { transform: translateY(0) translateX(0) rotate(-8deg); }
+    50%  { transform: translateY(-60vh) translateX(26px) rotate(6deg); }
+    100% { transform: translateY(-125vh) translateX(-18px) rotate(14deg); }
+  }
+
+  /* ---------- nav ---------- */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 30;
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    padding: 10px 16px;
+    background: rgba(255,255,255,.55);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,.7);
+  }
+  .brand { font-family: 'Pacifico', cursive; color: #d63384; font-size: 1.05rem; white-space: nowrap; }
+  .nav-links { display: flex; gap: 8px; }
+  .nav-pill {
+    text-decoration: none; font-weight: 700; font-size: .85rem; color: #a61e4d;
+    background: rgba(255,255,255,.7); border: 1px solid rgba(255,255,255,.85);
+    border-radius: 999px; padding: 7px 13px; transition: transform .12s, background .12s;
+  }
+  .nav-pill:hover { transform: translateY(-2px); background: #fff; }
+
+  /* ---------- hero ---------- */
+  .hero {
+    position: relative; z-index: 1; min-height: 100dvh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 100px 20px 70px;
+  }
+  .big-heart { font-size: 60px; animation: beat 1.4s infinite; }
+  @keyframes beat {
+    0%,100% { transform: scale(1); } 25% { transform: scale(1.18); }
+    40% { transform: scale(.97); } 60% { transform: scale(1.1); }
+  }
+  .hero h1 { font-size: clamp(2.2rem, 8vw, 3.6rem); margin: 10px 0 6px; }
+  .hero .sub { margin: 0 0 12px; font-weight: 600; color: #7a2a50; font-size: 1.05rem; }
+  .typed-line { font-weight: 700; color: #a61e4d; font-size: clamp(1rem, 3.6vw, 1.25rem); min-height: 1.6em; margin: 0; }
+  .caret { display: inline-block; width: 2px; height: 1.05em; background: #d63384; margin-left: 3px; vertical-align: text-bottom; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .chip {
+    display: inline-block; background: rgba(255,255,255,.7); border: 1px solid rgba(255,255,255,.85);
+    border-radius: 999px; padding: 7px 14px; font-weight: 700; color: #a61e4d; font-size: .88rem;
+  }
+  .scroll-cue { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); font-weight: 700; color: #a61e4d; font-size: .9rem; animation: bob 1.7s ease-in-out infinite; }
+  @keyframes bob { 0%,100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 8px); } }
+
+  /* ---------- sections ---------- */
+  .section { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 60px 20px; text-align: center; scroll-margin-top: 84px; }
+  .section h2 { font-size: clamp(1.9rem, 6vw, 2.6rem); margin: 0 0 8px; }
+  .section-sub { margin: 0 0 26px; font-weight: 600; color: #7a2a50; }
+  .prose { font-weight: 600; color: #7a2a50; line-height: 1.75; font-size: 1.02rem; max-width: 560px; margin: 0 auto 18px; }
+  .tiny { font-size: .85rem; font-weight: 600; color: #a61e4d; opacity: .85; margin: 14px 0 0; }
+
+  .reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.seen { opacity: 1; transform: none; }
+
+  /* ---------- carousel ---------- */
+  .car-shell { width: min(94vw, 640px); margin: 0 auto; }
+  .car-top { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 6px; }
+
+  .car-viewport { overflow: hidden; touch-action: pan-y; user-select: none; -webkit-user-select: none; cursor: grab; }
+  .car-viewport:active { cursor: grabbing; }
+  .car-track { display: flex; align-items: flex-start; transition: transform .5s cubic-bezier(.22,.9,.3,1); will-change: transform; }
+  .slide { flex: 0 0 100%; display: flex; justify-content: center; padding: 22px 16px 30px; }
+
+  .polaroid {
+    position: relative; width: min(100%, 380px);
+    background: #fff; border-radius: 6px; padding: 12px 12px 18px;
+    box-shadow: 0 16px 40px rgba(90,16,48,.28);
+    transform: rotate(var(--tilt, 0deg)); transition: transform .3s;
+  }
+  .slide:hover .polaroid { transform: rotate(var(--tilt, 0deg)) translateY(-4px); }
+  .polaroid::before {
+    content: ""; position: absolute; top: -13px; left: 50%; z-index: 2;
+    width: 96px; height: 28px; transform: translateX(-50%) rotate(-3deg);
+    background: rgba(243,166,198,.6); box-shadow: inset 0 0 8px rgba(255,255,255,.55);
+  }
+  .polaroid.dark { background: #2a1226; }
+  .polaroid.dark::before { background: rgba(255,255,255,.22); }
+  .polaroid.dark .p-text { color: #ffd6e7; }
+
+  .ph { aspect-ratio: 4/5; background: #ffe3ee; border-radius: 3px; overflow: hidden; }
+  .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .p-text { margin: 14px 2px 0; font-size: .93rem; font-weight: 600; color: #7a2a50; line-height: 1.55; min-height: 6.4em; text-align: left; }
+
+  .car-controls { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 4px; }
+  .round-btn {
+    width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,.85);
+    background: rgba(255,255,255,.8); color: #d63384; font-size: 1.15rem; font-family: inherit; font-weight: 700;
+    cursor: pointer; box-shadow: 0 6px 16px rgba(214,51,132,.2); transition: transform .12s, background .12s;
+  }
+  .round-btn:hover { transform: translateY(-2px); background: #fff; }
+  .round-btn:active { transform: scale(.92); }
+  .dots { display: flex; gap: 9px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid #d63384; background: transparent; padding: 0; cursor: pointer; transition: all .2s; }
+  .dot.on { background: #d63384; transform: scale(1.2); box-shadow: 0 0 8px rgba(214,51,132,.5); }
+
+  /* ---------- ribbon ---------- */
+  .ribbon { position: relative; z-index: 1; overflow: hidden; width: 104vw; margin: 26px 0 26px -2vw; padding: 12px 0;
+    background: linear-gradient(90deg, #d63384, #a04ecf); transform: rotate(-1.4deg); box-shadow: 0 10px 30px rgba(214,51,132,.3); }
+  .ribbon.rev { transform: rotate(1.4deg); }
+  .ribbon-track { display: flex; width: max-content; animation: marquee 22s linear infinite; }
+  .ribbon.rev .ribbon-track { animation-direction: reverse; }
+  .ribbon:hover .ribbon-track { animation-play-state: paused; }
+  .ribbon-half { display: flex; gap: 2.5rem; padding-right: 2.5rem; }
+  .ribbon-half span { font-family: 'Pacifico', cursive; color: #fff; font-size: 1.05rem; white-space: nowrap; }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+
+  /* ---------- eyes & mission ---------- */
+  .btn {
+    font-family: inherit; font-weight: 700; font-size: 1.05rem; color: #fff;
+    background: linear-gradient(135deg, #ff6fa5, #d63384);
+    border: none; border-radius: 999px; padding: 14px 30px; cursor: pointer;
+    box-shadow: 0 10px 26px rgba(214,51,132,.4); transition: transform .15s, box-shadow .15s; touch-action: manipulation;
+  }
+  .btn:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 16px 34px rgba(214,51,132,.5); }
+  .btn:active:not(:disabled) { transform: scale(.95); }
+  .btn:disabled { opacity: .75; cursor: default; }
+
+  .eyes-list { list-style: none; padding: 0; margin: 20px auto 0; max-width: 460px; display: grid; gap: 10px; }
+  .eyes-list li {
+    background: rgba(255,255,255,.7); border: 1px solid rgba(255,255,255,.85); border-radius: 16px;
+    padding: 13px 18px; font-weight: 600; color: #7a2a50; animation: rise .5s both;
+  }
+  .eyes-list li:nth-child(2) { animation-delay: .12s; }
+  .eyes-list li:nth-child(3) { animation-delay: .24s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+  .coupon {
+    margin: 22px auto 0; max-width: 440px; transform: rotate(-1.2deg);
+    background: linear-gradient(135deg, #ffe3ee, #ecd9fb);
+    border: 2px dashed #d63384; border-radius: 18px; padding: 18px 22px;
+    font-weight: 700; color: #7a1f4d; line-height: 1.6; animation: rise .5s both;
+    box-shadow: 0 10px 26px rgba(214,51,132,.25);
+  }
+
+  footer { position: relative; z-index: 1; text-align: center; padding: 30px 20px 70px; font-weight: 700; color: #a61e4d; }
+
+  /* ---------- burst hearts ---------- */
+  .burst-heart { position: fixed; z-index: 100; pointer-events: none; transform: translate(-50%, -50%); animation: burst .95s ease-out forwards; }
+  @keyframes burst {
+    to { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(var(--s)) rotate(var(--r)); opacity: 0; }
+  }
+
+  @media (max-width: 560px) {
+    .brand { font-size: .95rem; }
+    .nav-pill { font-size: .78rem; padding: 6px 10px; }
+    .slide { padding: 22px 14px 28px; }
+    .p-text { min-height: 7.6em; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .bg-heart, .burst-heart, .caret { display: none; }
+    .big-heart, .scroll-cue, .ribbon-track { animation: none; }
+    .reveal { opacity: 1 !important; transform: none !important; transition: none; }
+    .eyes-list li, .coupon { animation: none; }
+    .car-track { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="hearts-bg" aria-hidden="true"></div>
+
+<nav class="nav">
+  <span class="brand">for u 💗</span>
+  <div class="nav-links">
+    <a class="nav-pill" href="#pics">pics</a>
+    <a class="nav-pill" href="#eyes">her eyes</a>
+    <a class="nav-pill" href="#more">more 🥺</a>
+  </div>
+</nav>
+
+<!-- 💌 HERO -->
+<header class="hero" id="top">
+  <div class="big-heart">💝</div>
+  <h1 class="script">i made u something</h1>
+  <p class="sub">for <span id="hero-name"></span></p>
+  <p class="sub">this one's one of my favs cuz… u'll see 🙈</p>
+  <p class="typed-line">always wanting <span id="typed"></span><span class="caret"></span></p>
+  <div class="scroll-cue">scroll down ↓</div>
+</header>
+
+<!-- 📸 THE PICS -->
+<section id="pics" class="section reveal">
+  <p class="section-sub">it's just u. swipe sideways 💗</p>
+  <div class="car-shell">
+    <div class="car-top">
+      <span id="car-count" class="chip">1 / 6</span>
+    </div>
+    <div class="car-viewport" id="car-viewport">
+      <div class="car-track" id="car-track"></div>
+    </div>
+    <div class="car-controls">
+      <button id="prev-btn" class="round-btn" type="button" aria-label="previous pic">←</button>
+      <div id="dots" class="dots"></div>
+      <button id="next-btn" class="round-btn" type="button" aria-label="next pic">→</button>
+    </div>
+    <p class="tiny">swipe, drag, or use ← → … tap a pic for hearts 💗</p>
+  </div>
+</section>
+
+<div class="ribbon"><div class="ribbon-track"></div></div>
+
+<!-- 🥹 EYES -->
+<section id="eyes" class="section reveal">
+  <h2 class="script">those eyes 🥹</h2>
+  <p class="prose">
+    i keep saying it and i'll keep saying it. ur eyes are not fair. with the gothic makeup,
+    in the pool pics, half asleep… doesn't matter. i look for one second and i'm gone.
+    holding ur hand and looking at ur eyes in the morning is still my favorite moment
+    of the whole day. i could make a whole website just about them… i'm basically doing that rn 🥹
+  </p>
+  <button id="eyes-btn" class="btn" type="button" aria-expanded="false">look closer 🔍</button>
+  <ul id="eyes-more" class="eyes-list hidden">
+    <li>idk how to even describe them… i just know i can't look away 🥹</li>
+    <li>u look at me and i forget what i was talking about. every single time</li>
+    <li>the way they look at me like i'm someone worth looking at 💗</li>
+  </ul>
+</section>
+
+<div class="ribbon rev"><div class="ribbon-track"></div></div>
+
+<!-- 🥺 MORE -->
+<section id="more" class="section reveal">
+  <h2 class="script">always wanting more</h2>
+  <p class="prose">
+    six pics and somehow it's not enough. i want all of them. the blurry ones,
+    the "delete this" ones, the ones u think u look bad in (u don't).
+    so… <strong>send me more pics of u 🥺</strong> help me make a whole gallery. our gallery.
+  </p>
+  <span class="chip">gallery so far: <span id="gal-count"></span> / ∞</span>
+  <div style="margin-top:20px">
+    <button id="mission-btn" class="btn" type="button">accept the mission 📸</button>
+  </div>
+  <div id="mission-card" class="coupon hidden">
+    🎟️ mission accepted: send me 5 more pics 📸 the blurry ones, the 2am ones, the "delete this" ones.<br>
+    reward: unlimited compliments + a whole gallery with ur name on it 💗<br>
+    deadline: whenever… i'll be waiting 🥹
+  </div>
+</section>
+
+<footer>made with ❤️ by <span id="your-name"></span> · <span id="pic-count"></span> pics so far… always wanting more 💗</footer>
+
+<script>
+/* ============================================================
+   💗 EDIT HERE. add a pic later: upload 7.jpg to the urp repo,
+   then copy one entry below and change n / text
+   ============================================================ */
+const CONFIG = {
+  herName: "mommy 🥰💗",
+  yourName: "ur person",
+  base: "https://raw.githubusercontent.com/itsme0kjhgf/urp/refs/heads/main/",
+  pics: [
+    { n: 1, dark: true,
+      text: "idk what to say about this one. the makeup, the eyes, everything… u look… yeah. i have no words. none 🖤",
+      alt: "her in gothic makeup" },
+    { n: 2,
+      text: "u were just sitting there and i forgot how to talk. idk how to explain what this pic does to me. it's the simple ones that get me the most 🙈",
+      alt: "her sitting in a white dress" },
+    { n: 3,
+      text: "wait. WAIT. look at her?? how were u this cute?? i can't. i actually can't. i wish i knew u back then 🥹",
+      alt: "her as a little kid" },
+    { n: 4,
+      text: "u and ur little brother… ok this one broke me. u were so tiny and already so soft with him. idk. my heart just does a thing 💛",
+      alt: "her as a toddler with her baby brother" },
+    { n: 5,
+      text: "that smile. that's it. that's the whole caption. i tried to write something smart and i got nothing. just… that smile ☀️",
+      alt: "her smiling in a pool" },
+    { n: 6,
+      text: "this one gives me a feeling i can't name. like… calm? and soft? idk. i don't have the words for it and honestly i don't want to find them 🌊",
+      alt: "her hair after the pool" },
+  ],
+};
+/* ============================================================ */
+
+const $ = id => document.getElementById(id);
+const HEARTS = ["💗","💖","💕","❤️","💘","💞"];
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
+};
+
+/* ---------- names & counts ---------- */
+$("hero-name").textContent = CONFIG.herName;
+$("your-name").textContent = CONFIG.yourName;
+$("gal-count").textContent = CONFIG.pics.length;
+$("pic-count").textContent = CONFIG.pics.length;
+
+/* ---------- heart particles ---------- */
+function burstAt(x, y, n) {
+  if (reduceMotion) return;
+  for (let i = 0; i < n; i++) {
+    const h = document.createElement("span");
+    h.className = "burst-heart";
+    h.textContent = HEARTS[Math.floor(Math.random() * HEARTS.length)];
+    const angle = Math.random() * Math.PI * 2;
+    const dist = 60 + Math.random() * 160;
+    h.style.left = x + "px"; h.style.top = y + "px";
+    h.style.setProperty("--tx", Math.cos(angle) * dist + "px");
+    h.style.setProperty("--ty", Math.sin(angle) * dist + "px");
+    h.style.setProperty("--s", (0.6 + Math.random() * 1.2).toFixed(2));
+    h.style.setProperty("--r", (Math.random() * 160 - 80) + "deg");
+    h.style.fontSize = (14 + Math.random() * 18) + "px";
+    h.addEventListener("animationend", () => h.remove());
+    setTimeout(() => h.remove(), 1600);
+    document.body.appendChild(h);
+  }
+}
+(function bgHearts() {
+  const bg = $("hearts-bg");
+  for (let i = 0; i < 16; i++) {
+    const h = document.createElement("span");
+    h.className = "bg-heart";
+    h.textContent = HEARTS[Math.floor(Math.random() * HEARTS.length)];
+    h.style.left = Math.random() * 100 + "%";
+    h.style.fontSize = (14 + Math.random() * 24) + "px";
+    h.style.opacity = (0.25 + Math.random() * 0.4).toFixed(2);
+    h.style.animationDuration = (9 + Math.random() * 14) + "s";
+    h.style.animationDelay = (-Math.random() * 20) + "s";
+    bg.appendChild(h);
+  }
+})();
+
+/* ---------- build the carousel ---------- */
+const track = $("car-track"), viewport = $("car-viewport"), dotsEl = $("dots");
+const N = CONFIG.pics.length;
+const TILTS = [-2, 1.6, -1.2, 2, -1.8, 1.2];
+let cur = 0;
+
+CONFIG.pics.forEach((p, i) => {
+  const slide = document.createElement("div");
+  slide.className = "slide";
+  const pol = document.createElement("div");
+  pol.className = "polaroid" + (p.dark ? " dark" : "");
+  pol.style.setProperty("--tilt", TILTS[i % TILTS.length] + "deg");
+
+  const ph = document.createElement("div");
+  ph.className = "ph";
+  const img = document.createElement("img");
+  img.src = CONFIG.base + p.n + ".jpg";
+  img.alt = p.alt;
+  img.draggable = false;
+  if (i > 0) img.loading = "lazy";
+  ph.appendChild(img);
+
+  const text = document.createElement("p");
+  text.className = "p-text";
+  text.textContent = p.text;
+
+  pol.appendChild(ph); pol.appendChild(text);
+  slide.appendChild(pol);
+  track.appendChild(slide);
+
+  const d = document.createElement("button");
+  d.type = "button"; d.className = "dot";
+  d.setAttribute("aria-label", "go to pic " + (i + 1));
+  d.addEventListener("click", () => goTo(i));
+  dotsEl.appendChild(d);
+});
+
+function goTo(i) {
+  cur = ((i % N) + N) % N;
+  track.style.transform = "translateX(" + (-cur * 100) + "%)";
+  $("car-count").textContent = (cur + 1) + " / " + N;
+  [...dotsEl.children].forEach((d, j) => {
+    d.classList.toggle("on", j === cur);
+    if (j === cur) d.setAttribute("aria-current", "true"); else d.removeAttribute("aria-current");
+  });
+}
+goTo(0);
+
+/* preload the rest after first paint so swiping is instant */
+window.addEventListener("load", () => {
+  CONFIG.pics.forEach(p => { const im = new Image(); im.src = CONFIG.base + p.n + ".jpg"; });
+});
+
+/* ---------- swipe / drag (she moves them herself) ---------- */
+let dragging = false, startX = 0, dx = 0;
+viewport.addEventListener("dragstart", e => e.preventDefault());
+viewport.addEventListener("pointerdown", e => {
+  if (e.pointerType === "mouse" && e.button !== 0) return;
+  dragging = true; startX = e.clientX; dx = 0;
+  track.style.transition = "none";
+  viewport.setPointerCapture(e.pointerId);
+});
+viewport.addEventListener("pointermove", e => {
+  if (!dragging) return;
+  dx = e.clientX - startX;
+  track.style.transform = "translateX(calc(" + (-cur * 100) + "% + " + dx + "px))";
+});
+function endDrag(e, allowBurst) {
+  if (!dragging) return;
+  dragging = false;
+  track.style.transition = "";
+  if (dx < -60) goTo(cur + 1);
+  else if (dx > 60) goTo(cur - 1);
+  else goTo(cur);
+  if (allowBurst && Math.abs(dx) < 8 && e.target.closest && e.target.closest(".ph")) {
+    burstAt(e.clientX, e.clientY, 10);
+  }
+  dx = 0;
+}
+viewport.addEventListener("pointerup", e => endDrag(e, true));
+viewport.addEventListener("pointercancel", e => endDrag(e, false));
+
+/* ---------- arrows & keys ---------- */
+$("prev-btn").addEventListener("click", () => goTo(cur - 1));
+$("next-btn").addEventListener("click", () => goTo(cur + 1));
+document.addEventListener("keydown", e => {
+  if (e.key === "ArrowRight") goTo(cur + 1);
+  else if (e.key === "ArrowLeft") goTo(cur - 1);
+});
+
+/* ---------- typewriter ---------- */
+const PHRASES = [
+  "more of that smile ☀️",
+  "more of those eyes 🥹",
+  "more gothic looks 🖤",
+  "more of baby u 💛",
+  "more pool days 🌊",
+  "more of u. just… more of u 💗",
+];
+(function typer() {
+  const el = $("typed");
+  if (reduceMotion) { el.textContent = PHRASES[0]; return; }
+  let pi = 0, ci = 0, deleting = false;
+  (function step() {
+    const phrase = PHRASES[pi];
+    if (!deleting) {
+      ci++;
+      el.textContent = phrase.slice(0, ci);
+      if (ci === phrase.length) { deleting = true; setTimeout(step, 1700); return; }
+      setTimeout(step, 55);
+    } else {
+      ci--;
+      el.textContent = phrase.slice(0, ci);
+      if (ci === 0) { deleting = false; pi = (pi + 1) % PHRASES.length; setTimeout(step, 350); return; }
+      setTimeout(step, 28);
+    }
+  })();
+})();
+
+/* ---------- ribbons ---------- */
+document.querySelectorAll(".ribbon-track").forEach(t => {
+  for (let half = 0; half < 2; half++) {
+    const h = document.createElement("div");
+    h.className = "ribbon-half";
+    if (half === 1) h.setAttribute("aria-hidden", "true");
+    for (let i = 0; i < 6; i++) {
+      const s = document.createElement("span");
+      s.textContent = "always wanting more 💗";
+      h.appendChild(s);
+    }
+    t.appendChild(h);
+  }
+});
+
+/* ---------- scroll reveals ---------- */
+if ("IntersectionObserver" in window && !reduceMotion) {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add("seen"); io.unobserve(en.target); } });
+  }, { threshold: .15 });
+  document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+} else {
+  document.querySelectorAll(".reveal").forEach(el => el.classList.add("seen"));
+}
+
+/* ---------- eyes: look closer ---------- */
+$("eyes-btn").addEventListener("click", () => {
+  const list = $("eyes-more");
+  const opening = list.classList.contains("hidden");
+  list.classList.toggle("hidden");
+  $("eyes-btn").setAttribute("aria-expanded", String(opening));
+  $("eyes-btn").textContent = opening ? "okay i'm done 🙈" : "look closer 🔍";
+  if (opening) {
+    const r = $("eyes-btn").getBoundingClientRect();
+    burstAt(r.left + r.width / 2, r.top + r.height / 2, 14);
+  }
+});
+
+/* ---------- the mission ---------- */
+function acceptMission(fromClick) {
+  $("mission-card").classList.remove("hidden");
+  $("mission-btn").textContent = "mission accepted 🥹💗";
+  $("mission-btn").disabled = true;
+  store.set("ourstory_mission", "1");
+  if (fromClick) {
+    const r = $("mission-btn").getBoundingClientRect();
+    burstAt(r.left + r.width / 2, r.top + r.height / 2, 26);
+  }
+}
+$("mission-btn").addEventListener("click", () => acceptMission(true));
+if (store.get("ourstory_mission") === "1") acceptMission(false);
+</script>
+</body>
+</html>
